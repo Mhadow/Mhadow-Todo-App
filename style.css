@@ -1,0 +1,162 @@
+﻿* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: antiquewhite;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  color: rgb(205, 164, 171);
+  font-size: 4rem;
+  margin: 0;
+  font-weight: 300;
+  opacity: 45%;
+}
+
+[type="text"] {
+  padding: 2rem 1rem 1.5rem 1rem;
+  background-color: white;
+  width: 600px;
+  font-size: 1.5rem;
+  border: none;
+  outline: none;
+  border: 0.1px solid rgb(233, 233, 233);
+  z-index: 1;
+  border-left: none;
+}
+
+[type="text"]::placeholder {
+  opacity: 40%;
+  padding-top: 1.5rem;
+}
+
+.footer {
+  margin-top: 2.5rem;
+  opacity: 40%;
+}
+
+.todos_list,
+.filters {
+  display: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.content,
+.filters {
+  margin-top: -1rem;
+  background-color: white;
+  width: 670px;
+}
+
+.todos_list li {
+  border: 0.1px solid rgb(233, 233, 233);
+  margin-left: -2.5rem;
+  padding: 1rem;
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.big-container {
+  box-shadow: 0.2rem 0.5rem 1rem 0.2rem black;
+}
+
+.filters {
+  border: 0.1px solid rgb(233, 233, 233);
+  margin-bottom: -1rem;
+}
+
+.delete {
+  opacity: 100%;
+  color: rgba(159, 39, 39, 0.751);
+}
+
+.fa-regular {
+  margin-right: 1rem;
+  font-size: 2rem;
+  opacity: 40%;
+}
+
+.top {
+  background-color: white;
+}
+
+.fa-chevron-down {
+  background-color: transparent;
+  opacity: 20%;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.opacity-class {
+  opacity: 40%;
+}
+
+/* this styles the text of the todos */
+.check {
+  opacity: 70%;
+  font-size: 2rem;
+}
+
+.fa-circle-check {
+  color: rgb(10, 107, 10);
+}
+
+/* this is for the text of a todo that's marked as done */
+.marked {
+  text-decoration: line-through;
+  opacity: 40%;
+}
+
+.delete {
+  font-size: 2rem;
+  color: orangered;
+  display: none;
+}
+
+/* style for the bottom part */
+
+.filters {
+  height: 3rem;
+}
+
+#f1,
+#f2,
+#f3,
+#f4,
+#f5 {
+  padding-right: 1rem;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+#f1,
+#f2,
+#f3,
+#f4 {
+  float: left;
+}
+
+#f1 {
+  margin-left: -1rem;
+}
+
+#f2 {
+  margin-left: 8rem;
+}
+
+#f5 {
+  float: right;
+}
