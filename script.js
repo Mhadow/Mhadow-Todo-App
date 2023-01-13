@@ -29,7 +29,7 @@ if (localStorage.getItem("bodyEl") === null) {
         <ul id="todos" class="todos_list"></ul>
         <ul id="bottom" class="filters">
             <li id="f1"></li>
-            <li id="f2">All</li>
+            <li id="f2" class="active">All</li>
             <li id="f3">Active</li>
             <li id="f4">Completed</li>
             <li id="f5">Clear completed</li>
@@ -57,6 +57,10 @@ var toggleEl = document.getElementById("toggle_check");
 var todoContentEls = document.getElementsByClassName("todo_value");
 var contents = Array.from(todoContentEls);
 var filter1El = document.getElementById("f1");
+var filter2El = document.getElementById("f2");
+var filter3El = document.getElementById("f3");
+var filter4El = document.getElementById("f4");
+var filter5El = document.getElementById("f5");
 
 // here the program listens for the enter key press that adds the text from the input block to the TO DO list
 inputEl.addEventListener("keydown", (e) => {
@@ -103,11 +107,17 @@ inputEl.addEventListener("keydown", (e) => {
         listElmnt.classList.add("fa-circle-check");
         listElmnt.nextElementSibling.classList.add("marked");
         OK++;
+
+        //shows the option to remove all completed todos
+        filter5El.style.display = "block";
       } else {
         listElmnt.classList.remove("fa-circle-check");
         listElmnt.classList.add("fa-circle");
         listElmnt.nextElementSibling.classList.remove("marked");
         OK--;
+
+        //hides the option to remove all completed todos
+        filter5El.style.display = "none";
       }
 
       // updates the number of todos left.. to do
@@ -179,7 +189,7 @@ inputEl.addEventListener("keydown", (e) => {
   }
 });
 
-// the process of marking a todo as done
+// the process of marking a todo as done/undone
 Array.from(checkIconEls).forEach((el) => {
   el.addEventListener("click", () => {
     if (el.classList.contains("fa-circle")) {
@@ -187,11 +197,17 @@ Array.from(checkIconEls).forEach((el) => {
       el.classList.add("fa-circle-check");
       el.nextElementSibling.classList.add("marked");
       OK++;
+
+      //shows the option to remove all completed todos
+      filter5El.style.display = "block";
     } else {
       el.classList.remove("fa-circle-check");
       el.classList.add("fa-circle");
       el.nextElementSibling.classList.remove("marked");
       OK--;
+
+      //hides the option to remove all completed todos
+      filter5El.style.display = "none";
     }
 
     if (OK === Array.from(checkIconEls).length) {
@@ -259,10 +275,12 @@ toggleEl.addEventListener("click", () => {
         el.nextElementSibling.classList.add("marked");
         OK = Array.from(checkIconEls).length;
         localStorage.setItem("number_of_checked_todos", OK);
-        // localStorage.setItem("number_of_todos", 0);
 
         // updates the number of todos left.. to do (when all todos are marked as done)
         filter1El.textContent = `${0} items left`;
+
+        //shows the option to remove all completed todos
+        filter5El.style.display = "block";
       }
     });
   } else {
@@ -278,6 +296,9 @@ toggleEl.addEventListener("click", () => {
       // updates the number of todos left.. to do (when all todos are not marked as done)
       filter1El.textContent = `${nmbr} items left`;
     });
+
+    //hides the option to remove all completed todos
+    filter5El.style.display = "none";
   }
 
   // saving the page content to localStorage after new ToDos were added
@@ -299,4 +320,109 @@ contents.forEach((el) => {
       localStorage.setItem("bodyEl", bodyEl.innerHTML);
     }
   });
+});
+
+// filters
+
+filter2El.addEventListener("click", () => {
+  // styling
+  filter2El.classList.add("active");
+  filter2El.classList.remove("gray");
+
+  filter3El.classList.remove("active");
+  filter4El.classList.remove("active");
+
+  // show all todos
+  Array.from(listEls).forEach((el) => {
+    el.style.display = "flex";
+  });
+});
+
+filter2El.addEventListener("mouseover", () => {
+  if (!filter2El.classList.contains("active")) {
+    filter2El.classList.add("gray");
+  }
+});
+
+filter2El.addEventListener("mouseleave", () => {
+  if (!filter2El.classList.contains("active")) {
+    filter2El.classList.remove("gray");
+  }
+});
+
+filter3El.addEventListener("click", () => {
+  // styling
+  filter3El.classList.add("active");
+  filter3El.classList.remove("gray");
+
+  filter2El.classList.remove("active");
+  filter4El.classList.remove("active");
+
+  // show ACTIVE todos
+  Array.from(listEls).forEach((el) => {
+    if (!el.firstChild.firstChild.classList.contains("fa-circle")) {
+      el.style.display = "none";
+    } else {
+      el.style.display = "flex";
+    }
+  });
+});
+
+filter3El.addEventListener("mouseover", () => {
+  if (!filter3El.classList.contains("active")) {
+    filter3El.classList.add("gray");
+  }
+});
+
+filter3El.addEventListener("mouseleave", () => {
+  if (!filter3El.classList.contains("active")) {
+    filter3El.classList.remove("gray");
+  }
+});
+
+filter4El.addEventListener("click", () => {
+  // styling
+  filter4El.classList.add("active");
+  filter4El.classList.remove("gray");
+
+  filter2El.classList.remove("active");
+  filter3El.classList.remove("active");
+
+  // show COMPLETED todos
+  Array.from(listEls).forEach((el) => {
+    if (el.firstChild.firstChild.classList.contains("fa-circle")) {
+      el.style.display = "none";
+    } else {
+      el.style.display = "flex";
+    }
+  });
+});
+
+filter4El.addEventListener("mouseover", () => {
+  if (!filter4El.classList.contains("active")) {
+    filter4El.classList.add("gray");
+  }
+});
+
+filter4El.addEventListener("mouseleave", () => {
+  if (!filter4El.classList.contains("active")) {
+    filter4El.classList.remove("gray");
+  }
+});
+
+filter5El.addEventListener("click", () => {
+  Array.from(listEls).forEach((el) => {
+    if (!el.firstChild.firstChild.classList.contains("fa-circle")) {
+      el.style.display = "none";
+    }
+  });
+  filter5El.style.display = "none";
+});
+
+filter5El.addEventListener("mouseover", () => {
+  filter5El.style.textDecoration = "underline";
+});
+
+filter5El.addEventListener("mouseleave", () => {
+  filter5El.style.textDecoration = "none";
 });

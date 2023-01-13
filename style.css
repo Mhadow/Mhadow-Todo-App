@@ -137,9 +137,17 @@ ul {
 #f3,
 #f4,
 #f5 {
-  padding-right: 1rem;
-  padding-top: 1rem;
+  margin-right: 1rem;
+  /* padding-top: 1rem; */
   text-align: center;
+  margin-top: 1rem;
+}
+
+#f2,
+#f3,
+#f4,
+#f5 {
+  cursor: pointer;
 }
 
 #f1,
@@ -155,8 +163,22 @@ ul {
 
 #f2 {
   margin-left: 8rem;
+  /* padding-top: 1rem; */
+  /* text-align: center; */
 }
 
 #f5 {
   float: right;
+  display: none;
+}
+
+.active {
+  border: 1px solid pink;
+  border-radius: 0.2rem;
+}
+
+/* class used for the border of the filters when mouse is over one of them*/
+.gray {
+  border: 1px solid lightgray;
+  border-radius: 0.2rem;
 }
