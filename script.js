@@ -347,8 +347,6 @@ toggleEl.addEventListener("click", () => {
       OK = 0;
       localStorage.setItem("number_of_checked_todos", OK);
 
-      // localStorage.setItem("number_of_todos", Array.from(checkIconEls).length);
-
       // updates the number of todos left.. to do (when all todos are not marked as done)
       filter1El.textContent = `${nmbr} items left`;
     });
