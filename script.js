@@ -182,9 +182,65 @@ inputEl.addEventListener("keydown", (e) => {
 
     window.addEventListener("click", (e) => {
       if (e.target != todoContentEl) {
-        // saving the page content to localStorage after new ToDos were added
+        // getting the page content after new ToDos were added in order to be saved later
         bodyEl = document.querySelector("body");
       }
+    });
+
+    listEls = document.querySelectorAll("ul.todos_list li");
+
+    // updating the list of todos so that every filter works properly after a new todo is added and the page hasn't been refreshed yet
+    filter2El.addEventListener("click", () => {
+      // show all todos
+      Array.from(listEls).forEach((el) => {
+        el.style.display = "flex";
+      });
+    });
+
+    filter3El.addEventListener("click", () => {
+      // show ACTIVE todos
+      Array.from(listEls).forEach((el) => {
+        if (!el.firstChild.firstChild.classList.contains("fa-circle")) {
+          el.style.display = "none";
+        } else {
+          el.style.display = "flex";
+        }
+      });
+    });
+
+    filter4El.addEventListener("click", () => {
+      // show COMPLETED todos
+      Array.from(listEls).forEach((el) => {
+        if (el.firstChild.firstChild.classList.contains("fa-circle")) {
+          el.style.display = "none";
+        } else {
+          el.style.display = "flex";
+        }
+      });
+    });
+
+    filter5El.addEventListener("click", () => {
+      // gets the list of todos once again to not get in conflict with the click listener applied on filter5 at page load
+      listEls = document.querySelectorAll("ul.todos_list li");
+
+      Array.from(listEls).forEach((el) => {
+        if (!el.firstChild.firstChild.classList.contains("fa-circle")) {
+          listEl.removeChild(el);
+          nmbr--;
+          OK--;
+        }
+      });
+      filter5El.style.display = "none";
+
+      // resets the "mark all as done" button
+      toggleEl.classList.remove("opacity-class");
+
+      localStorage.setItem("number_of_todos", nmbr);
+      localStorage.setItem("number_of_checked_todos", OK);
+
+      // saving the page content to localStorage after new ToDos were added
+      bodyEl = document.querySelector("body");
+      localStorage.setItem("bodyEl", bodyEl.innerHTML);
     });
   }
 });
@@ -324,105 +380,117 @@ contents.forEach((el) => {
 
 // filters
 
-filter2El.addEventListener("click", () => {
-  // styling
-  filter2El.classList.add("active");
-  filter2El.classList.remove("gray");
-
-  filter3El.classList.remove("active");
-  filter4El.classList.remove("active");
-
-  // show all todos
-  Array.from(listEls).forEach((el) => {
-    el.style.display = "flex";
-  });
-});
-
-filter2El.addEventListener("mouseover", () => {
-  if (!filter2El.classList.contains("active")) {
-    filter2El.classList.add("gray");
-  }
-});
-
-filter2El.addEventListener("mouseleave", () => {
-  if (!filter2El.classList.contains("active")) {
+function filters() {
+  filter2El.addEventListener("click", () => {
+    // styling
+    filter2El.classList.add("active");
     filter2El.classList.remove("gray");
-  }
-});
 
-filter3El.addEventListener("click", () => {
-  // styling
-  filter3El.classList.add("active");
-  filter3El.classList.remove("gray");
+    filter3El.classList.remove("active");
+    filter4El.classList.remove("active");
 
-  filter2El.classList.remove("active");
-  filter4El.classList.remove("active");
-
-  // show ACTIVE todos
-  Array.from(listEls).forEach((el) => {
-    if (!el.firstChild.firstChild.classList.contains("fa-circle")) {
-      el.style.display = "none";
-    } else {
+    // show all todos
+    Array.from(listEls).forEach((el) => {
       el.style.display = "flex";
+    });
+  });
+
+  filter2El.addEventListener("mouseover", () => {
+    if (!filter2El.classList.contains("active")) {
+      filter2El.classList.add("gray");
     }
   });
-});
 
-filter3El.addEventListener("mouseover", () => {
-  if (!filter3El.classList.contains("active")) {
-    filter3El.classList.add("gray");
-  }
-});
+  filter2El.addEventListener("mouseleave", () => {
+    if (!filter2El.classList.contains("active")) {
+      filter2El.classList.remove("gray");
+    }
+  });
 
-filter3El.addEventListener("mouseleave", () => {
-  if (!filter3El.classList.contains("active")) {
+  filter3El.addEventListener("click", () => {
+    // styling
+    filter3El.classList.add("active");
     filter3El.classList.remove("gray");
-  }
-});
 
-filter4El.addEventListener("click", () => {
-  // styling
-  filter4El.classList.add("active");
-  filter4El.classList.remove("gray");
+    filter2El.classList.remove("active");
+    filter4El.classList.remove("active");
 
-  filter2El.classList.remove("active");
-  filter3El.classList.remove("active");
+    // show ACTIVE todos
+    Array.from(listEls).forEach((el) => {
+      if (!el.firstChild.firstChild.classList.contains("fa-circle")) {
+        el.style.display = "none";
+      } else {
+        el.style.display = "flex";
+      }
+    });
+  });
 
-  // show COMPLETED todos
-  Array.from(listEls).forEach((el) => {
-    if (el.firstChild.firstChild.classList.contains("fa-circle")) {
-      el.style.display = "none";
-    } else {
-      el.style.display = "flex";
+  filter3El.addEventListener("mouseover", () => {
+    if (!filter3El.classList.contains("active")) {
+      filter3El.classList.add("gray");
     }
   });
-});
 
-filter4El.addEventListener("mouseover", () => {
-  if (!filter4El.classList.contains("active")) {
-    filter4El.classList.add("gray");
-  }
-});
+  filter3El.addEventListener("mouseleave", () => {
+    if (!filter3El.classList.contains("active")) {
+      filter3El.classList.remove("gray");
+    }
+  });
 
-filter4El.addEventListener("mouseleave", () => {
-  if (!filter4El.classList.contains("active")) {
+  filter4El.addEventListener("click", () => {
+    // styling
+    filter4El.classList.add("active");
     filter4El.classList.remove("gray");
-  }
-});
 
-filter5El.addEventListener("click", () => {
-  Array.from(listEls).forEach((el) => {
-    if (!el.firstChild.firstChild.classList.contains("fa-circle")) {
-      el.style.display = "none";
+    filter2El.classList.remove("active");
+    filter3El.classList.remove("active");
+
+    // show COMPLETED todos
+    Array.from(listEls).forEach((el) => {
+      if (el.firstChild.firstChild.classList.contains("fa-circle")) {
+        el.style.display = "none";
+      } else {
+        el.style.display = "flex";
+      }
+    });
+  });
+
+  filter4El.addEventListener("mouseover", () => {
+    if (!filter4El.classList.contains("active")) {
+      filter4El.classList.add("gray");
     }
   });
-  filter5El.style.display = "none";
-});
 
-filter5El.addEventListener("mouseover", () => {
-  filter5El.style.textDecoration = "underline";
-});
+  filter4El.addEventListener("mouseleave", () => {
+    if (!filter4El.classList.contains("active")) {
+      filter4El.classList.remove("gray");
+    }
+  });
 
-filter5El.addEventListener("mouseleave", () => {
-  filter5El.style.textDecoration = "none";
-});
+  filter5El.addEventListener("click", () => {
+    Array.from(listEls).forEach((el) => {
+      if (!el.firstChild.firstChild.classList.contains("fa-circle")) {
+        listEl.removeChild(el);
+        nmbr--;
+        OK--;
+      }
+    });
+    filter5El.style.display = "none";
+
+    // resets the "mark all as done" button
+    toggleEl.classList.remove("opacity-class");
+
+    localStorage.setItem("number_of_todos", nmbr);
+    localStorage.setItem("number_of_checked_todos", OK);
+  });
+
+  filter5El.addEventListener("mouseover", () => {
+    filter5El.style.textDecoration = "underline";
+  });
+
+  filter5El.addEventListener("mouseleave", () => {
+    filter5El.style.textDecoration = "none";
+  });
+}
+
+filters();
